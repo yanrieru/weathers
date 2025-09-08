@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animated gradient background */
+.bg-animated-gradient {
+  background: linear-gradient(-45deg, #89f7fe, #97baeb, #00c9ff);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Root CSS variable used for card tilt */
+.soft-3d-root {
+  --rx: 0deg;
+  --ry: 0deg;
+  perspective: 1200px;
+}
+
+/* Blobs (soft colored shapes) */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(44px) saturate(120%);
+  opacity: 0.95;
+  transform: translate3d(0,0,0);
+  transition: transform 0.45s cubic-bezier(.2,.9,.25,1);
+  will-change: transform;
+}
+
+/* slight film / grain overlay for texture (optional) */
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.01), rgba(0,0,0,0.01));
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Scene card (glass + 3D tilt) - apply to your WeatherCard wrapper */
+.scene-card {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(30px);
+  transition: transform 160ms cubic-bezier(.2,.9,.25,1), box-shadow 200ms;
+  will-change: transform;
+  background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.62));
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  border-radius: 20px;
+  box-shadow:
+    0 12px 30px rgba(15,23,42,0.12),
+    0 3px 6px rgba(15,23,42,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* small highlight stripe on card */
+.scene-card::before {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 6%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), transparent);
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* floating animation (subtle) */
+@keyframes floaty {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+.scene-float {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+/* responsive tweaks */
+@media (max-width: 640px) {
+  .blob-1, .blob-2, .blob-3 { filter: blur(36px); opacity: 0.9; }
+  .scene-card::before { display: none; }
+}
