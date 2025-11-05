@@ -91,7 +91,7 @@ export default function App() {
       {/* 🌐 Tombol toggle bahasa */}
       <div className="absolute top-4 right-4">
         <button onClick={toggleLang} className="px-3 py-2 bg-white/60 backdrop-blur rounded-xl shadow text-sm font-medium hover:scale-95 transition">
-          {lang === "id" ? "🌍 EN" : "🇮🇩 ID"}
+          {lang === "id" ? "🌍 EN" : "🌍 ID"}
         </button>
       </div>
 
